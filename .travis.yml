@@ -3,21 +3,21 @@ language: generic
 sudo: required
 
 services:
-    - docker
+  - docker
 
 before_install:
-  - docker build -t ggs4545/react-test-app -f ./frontend/Dockerfile.dev ./frontend
+  - docker build -t smileajw1004/react-test-app -f ./frontend/Dockerfile.dev ./frontend
 
 script:
-  - docker run -e CI=true ggs4545/react-test-app npm run test
+  - docker run -e CI=true smileajw1004/react-test-app npm test
 
-  after_success:
-    - docker build -t ggs4545/docker-frontend ./frontend
-    - docker build -t ggs4545/docker-backend ./backend
-    - docker build -t ggs4545/docker-nginx ./nginx
+after_success:
+  - docker build -t smileajw1004/docker-frontend ./frontend
+  - docker build -t smileajw1004/docker-backend ./backend
+  - docker build -t smileajw1004/docker-nginx ./nginx
 
-    - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_ID" --password-stdin
+  - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_ID" --password-stdin
 
-    - docker push ggs4545/docker-frontend
-    - docker push ggs4545/docker-backend
-    - docker push ggs4545/docker-nginx
+  - docker push smileajw1004/docker-frontend
+  - docker push smileajw1004/docker-backend
+  - docker push smileajw1004/docker-nginx
